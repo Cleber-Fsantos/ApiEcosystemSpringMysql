@@ -1,13 +1,14 @@
 package com.senai.apiecosystem.controllers;
 
+import com.senai.apiecosystem.dtos.UsuarioDto;
 import com.senai.apiecosystem.models.UsuarioModel;
 import com.senai.apiecosystem.repositories.UsuarioRepository;
+import jakarta.validation.Valid;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,4 +22,23 @@ public class UsuarioController {
     public ResponseEntity<List<UsuarioModel>> listarUsuarios(){
         return ResponseEntity.status(HttpStatus.OK).body(usuarioRepository.findAll());
     }
+
+    @PostMapping
+    public ResponseEntity<Object> cadastrarUsuario(@RequestBody @Valid UsuarioDto usuarioDto) {
+        if (usuarioRepository.findByEmail(usuarioDto.email()) != null) {
+            // Não pode cadastrar
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Esse email já está cadastrado!");
+        }
+
+        UsuarioModel usuario = new UsuarioModel();
+        BeanUtils.copyProperties(usuarioDto, usuario);
+        System.out.println(usuario.getTipousuario());
+        System.out.println(usuarioDto.id_tipousuario());
+        System.out.println();
+        System.out.println(usuarioDto);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioRepository.save(usuario));
+    }
 }
+
+

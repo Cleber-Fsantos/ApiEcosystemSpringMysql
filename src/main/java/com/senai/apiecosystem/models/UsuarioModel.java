@@ -12,10 +12,10 @@ import java.util.UUID;
 @Setter
 @Entity
 @Table(name = "tb_usuario")
-public class UsuarioModel implements Serializable {
-
+public class UsuarioModel implements Serializable{
     @Serial
     private static final long serialVersionUID = 1;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
@@ -35,13 +35,12 @@ public class UsuarioModel implements Serializable {
 
     private String cnpj;
 
-    @ManyToOne
-    @JoinColumn(name = "id_tipoUsuario", referencedColumnName = "id")
-    private UsuarioModel id_tipoUsuario;
+    @OneToOne
+    @JoinColumn(name = "id_tipousuario", referencedColumnName = "id")
+    private UsuarioModel tipousuario;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "id_endereco", referencedColumnName = "id")
-    private UsuarioModel id_endereco;
-
+    private UsuarioModel endereco;
 
 }

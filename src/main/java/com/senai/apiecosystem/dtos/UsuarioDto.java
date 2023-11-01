@@ -5,6 +5,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.UUID;
 
@@ -20,7 +21,7 @@ public record UsuarioDto(
 
         String cnpj,
 
-        @NotBlank UUID id_tipoUsuario,
+        @NotNull UUID id_tipousuario,
 
         UUID id_endereco
 
