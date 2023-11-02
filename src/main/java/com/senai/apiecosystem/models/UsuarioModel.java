@@ -14,7 +14,7 @@ import java.util.UUID;
 @Table(name = "tb_usuario")
 public class UsuarioModel implements Serializable{
     @Serial
-    private static final long serialVersionUID = 1;
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -37,10 +37,10 @@ public class UsuarioModel implements Serializable{
 
     @OneToOne
     @JoinColumn(name = "id_tipousuario", referencedColumnName = "id")
-    private UsuarioModel tipousuario;
+    private UsuarioModel id_tipousuario;
 
     @OneToOne
     @JoinColumn(name = "id_endereco", referencedColumnName = "id")
-    private UsuarioModel endereco;
+    private UsuarioModel id_endereco;
 
 }

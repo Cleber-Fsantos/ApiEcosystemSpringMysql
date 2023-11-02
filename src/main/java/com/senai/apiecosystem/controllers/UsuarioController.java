@@ -24,7 +24,7 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> cadastrarUsuario(@RequestBody @Valid UsuarioDto usuarioDto) {
+    public ResponseEntity<Object> cadastrarUsuarios(@RequestBody @Valid UsuarioDto usuarioDto) {
         if (usuarioRepository.findByEmail(usuarioDto.email()) != null) {
             // Não pode cadastrar
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Esse email já está cadastrado!");
@@ -32,13 +32,13 @@ public class UsuarioController {
 
         UsuarioModel usuario = new UsuarioModel();
         BeanUtils.copyProperties(usuarioDto, usuario);
-        System.out.println(usuario.getTipousuario());
-        System.out.println(usuarioDto.id_tipousuario());
-        System.out.println();
-        System.out.println(usuarioDto);
+        System.out.println(usuario);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(usuarioRepository.save(usuario));
     }
+
+
+
 }
 
 
