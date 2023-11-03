@@ -14,7 +14,7 @@ import java.util.UUID;
 @Table(name = "tb_endereco")
 public class EnderecoModel implements Serializable{
     @Serial
-    private static final long serialVersionUID = 1;
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

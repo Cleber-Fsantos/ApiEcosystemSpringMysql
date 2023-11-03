@@ -11,8 +11,8 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name = "tb_tipousuario")
-public class TipoUsuarioModel implements Serializable{
+@Table(name = "tb_categoria")
+public class CategoriaModel implements Serializable{
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -21,5 +21,5 @@ public class TipoUsuarioModel implements Serializable{
     @Column(name = "id", nullable = false)
     private UUID id;
 
-    private Integer tipo_usuario;
+    private String nome;
 }
