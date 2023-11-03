@@ -1,9 +1,7 @@
 package com.senai.apiecosystem.controllers;
 
 import com.senai.apiecosystem.dtos.CategoriaDto;
-import com.senai.apiecosystem.dtos.TipoUsuarioDto;
 import com.senai.apiecosystem.models.CategoriaModel;
-import com.senai.apiecosystem.models.TipoUsuarioModel;
 import com.senai.apiecosystem.repositories.CategoriaRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
