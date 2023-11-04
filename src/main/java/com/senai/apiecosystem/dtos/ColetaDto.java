@@ -3,21 +3,19 @@ package com.senai.apiecosystem.dtos;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
-public record AnuncioDto(
-        @NotBlank String titulo,
+public record ColetaDto(
+        @NotBlank String status_coleta,
 
         @NotBlank String data_retirada,
-        @NotBlank String período_retirada,
 
-        @NotBlank String status_anuncio,
-
-        String url_imagem,
+        @NotBlank String observacao,
 
         @NotNull UUID id_usuario,
 
-        @NotNull UUID id_produto
+        @NotNull UUID id_anuncio
 
 ) {
 
