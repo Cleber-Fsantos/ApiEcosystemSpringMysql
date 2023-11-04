@@ -37,10 +37,10 @@ public class UsuarioModel implements Serializable{
 
     @OneToOne
     @JoinColumn(name = "id_tipousuario", referencedColumnName = "id")
-    private UsuarioModel id_tipousuario;
+    private TipoUsuarioModel tipousuario;
 
     @OneToOne
     @JoinColumn(name = "id_endereco", referencedColumnName = "id")
-    private UsuarioModel id_endereco;
+    private EnderecoModel endereco;
 
 }
