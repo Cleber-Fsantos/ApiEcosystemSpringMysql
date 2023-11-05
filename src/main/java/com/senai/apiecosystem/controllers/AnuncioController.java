@@ -18,6 +18,8 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/anuncio", produces = {"application/json"})
@@ -35,6 +37,17 @@ public class AnuncioController {
     @GetMapping
     public ResponseEntity<List<AnuncioModel>> listarAnuncios(){
         return ResponseEntity.status(HttpStatus.OK).body(anuncioRepository.findAll());
+    }
+
+    @GetMapping("/{idAnuncio}")
+    public ResponseEntity<Object> exibirAnuncio(@PathVariable(value = "idAnuncio") UUID id) {
+        Optional<AnuncioModel> anuncioBuscado = anuncioRepository.findById(id);
+
+        if (anuncioBuscado.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Anuncio não encontrado");
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(anuncioBuscado.get());
     }
 
 
@@ -67,6 +80,42 @@ public class AnuncioController {
         }
 
         return ResponseEntity.status(HttpStatus.CREATED).body(anuncioRepository.save(anuncioModel));
+    }
+
+    @PutMapping(value = "/{idAnuncio}", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    public ResponseEntity<Object> editarAnuncio(@PathVariable(value = "idAnuncio") UUID id, @ModelAttribute @Valid AnuncioDto anuncioDto) {
+        Optional<AnuncioModel> anuncioBuscado = anuncioRepository.findById(id);
+
+        if (anuncioBuscado.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Anuncio não encontrado");
+        }
+
+        AnuncioModel anuncio = anuncioBuscado.get();
+
+        BeanUtils.copyProperties(anuncioDto, anuncio);
+
+        String urlImagem;
+        try {
+            urlImagem = fileUploadService.FazerUpload(anuncioDto.imagem());
+        } catch (IOException exception) {
+            throw new RuntimeException(exception);
+        }
+        anuncio.setUrl_imagem(urlImagem);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(anuncioRepository.save(anuncio));
+    }
+
+    @DeleteMapping("/{idAnuncio}")
+    public ResponseEntity<Object> deletarAnuncio(@PathVariable(value = "idAnuncio") UUID id) {
+        Optional<AnuncioModel> anuncioBuscado = anuncioRepository.findById(id);
+
+        if (anuncioBuscado.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Anuncio não encontrado");
+        }
+
+        anuncioRepository.delete(anuncioBuscado.get());
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Anuncio deletado com sucesso!");
     }
 
 
