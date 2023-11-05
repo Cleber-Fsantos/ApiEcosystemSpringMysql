@@ -24,7 +24,7 @@ public class ColetaModel implements Serializable{
 
     private LocalDate data_cadastro;
 
-    private LocalDate data_retirada;
+    private String data_retirada;
 
     private String status_coleta;
 
