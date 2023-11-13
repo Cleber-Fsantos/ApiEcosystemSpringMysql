@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -63,6 +64,9 @@ public class UsuarioController {
             ResponseEntity.status(HttpStatus.BAD_REQUEST).body("id_tipousuario não encontrado");
         }
 
+        String senhaCriptografada = new BCryptPasswordEncoder().encode(usuarioDto.senha());
+        usuarioModel.setSenha(senhaCriptografada);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(usuarioRepository.save(usuarioModel));
     }
 
@@ -76,6 +80,9 @@ public class UsuarioController {
 
         UsuarioModel usuario = usuarioBuscado.get();
         BeanUtils.copyProperties(usuarioDto, usuario);
+
+        String senhaCriptografada = new BCryptPasswordEncoder().encode(usuarioDto.senha());
+        usuario.setSenha(senhaCriptografada);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(usuarioRepository.save(usuario));
     }
