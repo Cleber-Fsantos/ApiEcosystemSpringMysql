@@ -21,5 +21,4 @@ public record AnuncioDto(
         @NotNull UUID id_produto
 
 ) {
-
 }
