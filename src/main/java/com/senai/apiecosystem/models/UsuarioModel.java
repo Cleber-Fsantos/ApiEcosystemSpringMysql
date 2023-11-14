@@ -4,11 +4,13 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -52,6 +54,22 @@ public class UsuarioModel implements Serializable, UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+
+        if (this.tipo_usuario_teste == TipoModel.ADMIN){
+            return List.of(
+                    new SimpleGrantedAuthority("ROLE_ADMIN"),
+                    new SimpleGrantedAuthority("ROLE_DOADOR"),
+                    new SimpleGrantedAuthority("ROLE_COLETOR")
+            );
+        } else if (this.tipo_usuario_teste == TipoModel.DOADOR) {
+            return List.of(
+                    new SimpleGrantedAuthority("ROLE_DOADOR")
+            );
+        } else if (this.tipo_usuario_teste == TipoModel.COLETOR) {
+            return List.of(
+                    new SimpleGrantedAuthority("ROLE_COLETOR")
+            );
+        }
         return null;
     }
 

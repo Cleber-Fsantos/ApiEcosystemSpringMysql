@@ -1,5 +1,6 @@
 package com.senai.apiecosystem.dtos;
 
+import com.senai.apiecosystem.models.TipoModel;
 import com.senai.apiecosystem.models.UsuarioModel;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -20,6 +21,8 @@ public record UsuarioDto(
         String cpf,
 
         String cnpj,
+
+        TipoModel tipo_usuario_teste,
 
         @NotNull UUID id_tipousuario,
 
