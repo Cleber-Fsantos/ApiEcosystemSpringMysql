@@ -40,9 +40,7 @@ public class UsuarioModel implements Serializable, UserDetails {
 
     private String cnpj;
 
-    private TipoModel tipo_usuario_teste;
-
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "id_tipousuario", referencedColumnName = "id")
     private TipoUsuarioModel tipousuario;
 
@@ -55,17 +53,17 @@ public class UsuarioModel implements Serializable, UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
-        if (this.tipo_usuario_teste == TipoModel.ADMIN){
+        if (this.tipousuario.getNome().equals("admin")){
             return List.of(
                     new SimpleGrantedAuthority("ROLE_ADMIN"),
                     new SimpleGrantedAuthority("ROLE_DOADOR"),
                     new SimpleGrantedAuthority("ROLE_COLETOR")
             );
-        } else if (this.tipo_usuario_teste == TipoModel.DOADOR) {
+        } else if (this.tipousuario.getNome().equals("doador")) {
             return List.of(
                     new SimpleGrantedAuthority("ROLE_DOADOR")
             );
-        } else if (this.tipo_usuario_teste == TipoModel.COLETOR) {
+        } else if (this.tipousuario.getNome().equals("coletor")) {
             return List.of(
                     new SimpleGrantedAuthority("ROLE_COLETOR")
             );

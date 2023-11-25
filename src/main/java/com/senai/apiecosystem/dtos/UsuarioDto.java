@@ -22,7 +22,7 @@ public record UsuarioDto(
 
         String cnpj,
 
-        TipoModel tipo_usuario_teste,
+        String tipo_User,
 
         @NotNull UUID id_tipousuario,
 

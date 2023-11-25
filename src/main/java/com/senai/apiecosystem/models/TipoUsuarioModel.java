@@ -21,5 +21,5 @@ public class TipoUsuarioModel implements Serializable{
     @Column(name = "id", nullable = false)
     private UUID id;
 
-    private Integer tipo_usuario;
+    private String nome;
 }

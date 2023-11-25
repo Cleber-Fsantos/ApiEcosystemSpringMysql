@@ -2,7 +2,9 @@ package com.senai.apiecosystem.controllers;
 
 
 import com.senai.apiecosystem.dtos.UsuarioDto;
+import com.senai.apiecosystem.models.TipoUsuarioModel;
 import com.senai.apiecosystem.models.UsuarioModel;
+import com.senai.apiecosystem.repositories.EnderecoRepository;
 import com.senai.apiecosystem.repositories.TipoUsuarioRepository;
 import com.senai.apiecosystem.repositories.UsuarioRepository;
 import io.swagger.v3.oas.annotations.Operation;
@@ -29,6 +31,9 @@ public class UsuarioController {
 
     @Autowired
     private TipoUsuarioRepository tipoUsuarioRepository;
+
+    @Autowired
+    private EnderecoRepository enderecoRepository;
 
     @Operation(summary = "Método para CONSULTAR todos usuários", method = "GET")
     @ApiResponses(value = {
@@ -72,12 +77,20 @@ public class UsuarioController {
 
         BeanUtils.copyProperties(usuarioDto, usuarioModel);
 
-        var tipoUsuario = tipoUsuarioRepository.findById(usuarioDto.id_tipousuario());
+        Optional<TipoUsuarioModel> tipoUsuario = tipoUsuarioRepository.findByNome(usuarioDto.tipo_User());
 
         if (tipoUsuario.isPresent()) {
             usuarioModel.setTipousuario(tipoUsuario.get());
-        } else {
+        }else{
             ResponseEntity.status(HttpStatus.BAD_REQUEST).body("id_tipousuario não encontrado");
+        }
+
+        var endereco = enderecoRepository.findById(usuarioDto.id_endereco());
+
+        if (endereco.isPresent()) {
+            usuarioModel.setEndereco(endereco.get());
+        } else {
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).body("id_Endereço não encontrado");
         }
 
         String senhaCriptografada = new BCryptPasswordEncoder().encode(usuarioDto.senha());
